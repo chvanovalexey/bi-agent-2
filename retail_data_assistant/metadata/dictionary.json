@@ -1,0 +1,124 @@
+{
+  "business_terms": [
+    {
+      "term": "выручка",
+      "definition": "Общая сумма денег, полученных от продажи товаров",
+      "sql_representation": "SUM(total_amount)",
+      "related_columns": ["sales.total_amount"]
+    },
+    {
+      "term": "прибыль",
+      "definition": "Разница между выручкой и себестоимостью проданных товаров",
+      "sql_representation": "SUM((s.unit_price - p.unit_cost) * s.quantity)",
+      "related_columns": ["sales.unit_price", "products.unit_cost", "sales.quantity"]
+    },
+    {
+      "term": "маржа",
+      "definition": "Разница между ценой продажи и себестоимостью, выраженная в процентах",
+      "sql_representation": "(SUM((s.unit_price - p.unit_cost) * s.quantity) / SUM(s.total_amount)) * 100",
+      "related_columns": ["sales.unit_price", "products.unit_cost", "sales.quantity", "sales.total_amount"]
+    },
+    {
+      "term": "продажи",
+      "definition": "Количество проданных единиц товара",
+      "sql_representation": "SUM(quantity)",
+      "related_columns": ["sales.quantity"]
+    },
+    {
+      "term": "средний чек",
+      "definition": "Средняя сумма, которую тратит покупатель за одну транзакцию",
+      "sql_representation": "AVG(total_amount)",
+      "related_columns": ["sales.total_amount"]
+    },
+    {
+      "term": "средняя цена",
+      "definition": "Средняя цена продажи товара",
+      "sql_representation": "AVG(unit_price)",
+      "related_columns": ["sales.unit_price", "products.unit_price"]
+    },
+    {
+      "term": "запас",
+      "definition": "Количество товара, доступного на складе",
+      "sql_representation": "quantity",
+      "related_columns": ["inventory.quantity"]
+    },
+    {
+      "term": "собственная торговая марка",
+      "definition": "Товары, производимые под брендом торговой сети",
+      "sql_representation": "is_private_label = TRUE",
+      "related_columns": ["products.is_private_label"]
+    },
+    {
+      "term": "критический запас",
+      "definition": "Запас товара ниже минимального допустимого уровня",
+      "sql_representation": "inventory.quantity < inventory.min_stock_level",
+      "related_columns": ["inventory.quantity", "inventory.min_stock_level"]
+    },
+    {
+      "term": "избыточный запас",
+      "definition": "Запас товара выше максимального рекомендуемого уровня",
+      "sql_representation": "inventory.quantity > inventory.max_stock_level",
+      "related_columns": ["inventory.quantity", "inventory.max_stock_level"]
+    },
+    {
+      "term": "оборачиваемость",
+      "definition": "Скорость продажи товаров за определенный период",
+      "sql_representation": "SUM(sales.quantity) / AVG(inventory.quantity)",
+      "related_columns": ["sales.quantity", "inventory.quantity"]
+    },
+    {
+      "term": "дневные продажи",
+      "definition": "Количество продаж, совершенных за один день",
+      "sql_representation": "COUNT(*)",
+      "related_columns": ["sales.sale_id", "sales.sale_date"]
+    },
+    {
+      "term": "уровень лояльности",
+      "definition": "Статус клиента в программе лояльности",
+      "sql_representation": "loyalty_level",
+      "related_columns": ["customers.loyalty_level"]
+    },
+    {
+      "term": "промо-эффективность",
+      "definition": "Отношение выручки во время акции к обычной выручке",
+      "sql_representation": "SUM(CASE WHEN sales.promo_id IS NOT NULL THEN sales.total_amount ELSE 0 END) / SUM(CASE WHEN sales.promo_id IS NULL THEN sales.total_amount ELSE 0 END)",
+      "related_columns": ["sales.promo_id", "sales.total_amount"]
+    },
+    {
+      "term": "доля промо-продаж",
+      "definition": "Процент продаж, осуществленных по акциям",
+      "sql_representation": "(COUNT(CASE WHEN sales.promo_id IS NOT NULL THEN 1 END) / COUNT(*)) * 100",
+      "related_columns": ["sales.promo_id"]
+    },
+    {
+      "term": "доля категории",
+      "definition": "Процент выручки, приходящийся на определенную категорию товаров",
+      "sql_representation": "(SUM(CASE WHEN products.category_id = X THEN sales.total_amount ELSE 0 END) / SUM(sales.total_amount)) * 100",
+      "related_columns": ["products.category_id", "sales.total_amount"]
+    },
+    {
+      "term": "активные клиенты",
+      "definition": "Клиенты, совершившие хотя бы одну покупку за последний месяц",
+      "sql_representation": "customers.customer_id IN (SELECT DISTINCT customer_id FROM sales WHERE sales.sale_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH))",
+      "related_columns": ["customers.customer_id", "sales.customer_id", "sales.sale_date"]
+    },
+    {
+      "term": "товары-компаньоны",
+      "definition": "Товары, которые часто покупают вместе",
+      "sql_representation": "Требует сложного анализа совместных покупок",
+      "related_columns": ["sales.product_id", "sales.sale_id"]
+    },
+    {
+      "term": "средний возраст клиентов",
+      "definition": "Средний возраст клиентов, совершающих покупки",
+      "sql_representation": "AVG(DATEDIFF(CURRENT_DATE, customers.birth_date) / 365)",
+      "related_columns": ["customers.birth_date"]
+    },
+    {
+      "term": "сезонность",
+      "definition": "Изменение продаж в зависимости от времени года",
+      "sql_representation": "Требует группировки по месяцам/кварталам и сравнения",
+      "related_columns": ["sales.sale_date", "sales.quantity", "sales.total_amount"]
+    }
+  ]
+} 

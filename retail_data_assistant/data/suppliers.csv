@@ -1,0 +1,6 @@
+supplier_id,supplier_name,contact_person,email,phone,country,rating
+1,МолокоПром,Иванов И.И.,info@molokoprom.ru,+7(999)123-45-67,Россия,4.5
+2,ХлебПром,Петров П.П.,info@hlebprom.ru,+7(999)234-56-78,Россия,4.7
+3,МясоПром,Сидоров С.С.,info@myasoprom.ru,+7(999)345-67-89,Россия,4.2
+4,НапиткиПром,Козлова К.К.,info@napitkiprom.ru,+7(999)456-78-90,Россия,4.6
+5,ЗаморозкаПром,Смирнов С.С.,info@zamorozkaprom.ru,+7(999)567-89-01,Беларусь,4.3

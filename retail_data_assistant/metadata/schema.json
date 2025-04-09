@@ -1,0 +1,176 @@
+{
+  "tables": [
+    {
+      "name": "stores",
+      "description": "Информация о магазинах",
+      "columns": [
+        {"name": "store_id", "type": "INTEGER", "description": "Уникальный идентификатор магазина"},
+        {"name": "store_name", "type": "TEXT", "description": "Название магазина"},
+        {"name": "format", "type": "TEXT", "description": "Формат магазина (гипермаркет, супермаркет, мини-маркет)"},
+        {"name": "region", "type": "TEXT", "description": "Регион расположения"},
+        {"name": "city", "type": "TEXT", "description": "Город"},
+        {"name": "open_date", "type": "DATE", "description": "Дата открытия"},
+        {"name": "size_sqm", "type": "FLOAT", "description": "Площадь магазина в квадратных метрах"},
+        {"name": "is_active", "type": "BOOLEAN", "description": "Активен ли магазин"}
+      ]
+    },
+    {
+      "name": "products",
+      "description": "Информация о товарах",
+      "columns": [
+        {"name": "product_id", "type": "INTEGER", "description": "Уникальный идентификатор товара"},
+        {"name": "product_name", "type": "TEXT", "description": "Наименование товара"},
+        {"name": "category_id", "type": "INTEGER", "description": "Идентификатор категории"},
+        {"name": "subcategory_id", "type": "INTEGER", "description": "Идентификатор подкатегории"},
+        {"name": "brand", "type": "TEXT", "description": "Бренд"},
+        {"name": "supplier_id", "type": "INTEGER", "description": "Идентификатор поставщика"},
+        {"name": "unit_price", "type": "FLOAT", "description": "Базовая цена за единицу"},
+        {"name": "unit_cost", "type": "FLOAT", "description": "Себестоимость единицы"},
+        {"name": "unit_type", "type": "TEXT", "description": "Единица измерения (кг, шт, л)"},
+        {"name": "is_private_label", "type": "BOOLEAN", "description": "Является ли собственной торговой маркой"}
+      ]
+    },
+    {
+      "name": "categories",
+      "description": "Категории товаров",
+      "columns": [
+        {"name": "category_id", "type": "INTEGER", "description": "Уникальный идентификатор категории"},
+        {"name": "category_name", "type": "TEXT", "description": "Название категории"},
+        {"name": "department", "type": "TEXT", "description": "Отдел"}
+      ]
+    },
+    {
+      "name": "subcategories",
+      "description": "Подкатегории товаров",
+      "columns": [
+        {"name": "subcategory_id", "type": "INTEGER", "description": "Уникальный идентификатор подкатегории"},
+        {"name": "category_id", "type": "INTEGER", "description": "Идентификатор родительской категории"},
+        {"name": "subcategory_name", "type": "TEXT", "description": "Название подкатегории"}
+      ]
+    },
+    {
+      "name": "sales",
+      "description": "Данные о продажах",
+      "columns": [
+        {"name": "sale_id", "type": "INTEGER", "description": "Уникальный идентификатор продажи"},
+        {"name": "store_id", "type": "INTEGER", "description": "Идентификатор магазина"},
+        {"name": "product_id", "type": "INTEGER", "description": "Идентификатор товара"},
+        {"name": "customer_id", "type": "INTEGER", "description": "Идентификатор клиента (может быть NULL)"},
+        {"name": "sale_date", "type": "DATE", "description": "Дата продажи"},
+        {"name": "quantity", "type": "FLOAT", "description": "Количество проданных единиц"},
+        {"name": "unit_price", "type": "FLOAT", "description": "Фактическая цена продажи за единицу"},
+        {"name": "discount", "type": "FLOAT", "description": "Размер скидки"},
+        {"name": "total_amount", "type": "FLOAT", "description": "Итоговая сумма продажи"},
+        {"name": "payment_type", "type": "TEXT", "description": "Тип оплаты (наличные, карта, онлайн)"},
+        {"name": "promo_id", "type": "INTEGER", "description": "Идентификатор промо-акции (может быть NULL)"}
+      ]
+    },
+    {
+      "name": "customers",
+      "description": "Информация о клиентах",
+      "columns": [
+        {"name": "customer_id", "type": "INTEGER", "description": "Уникальный идентификатор клиента"},
+        {"name": "first_name", "type": "TEXT", "description": "Имя"},
+        {"name": "last_name", "type": "TEXT", "description": "Фамилия"},
+        {"name": "email", "type": "TEXT", "description": "Электронная почта"},
+        {"name": "phone", "type": "TEXT", "description": "Телефон"},
+        {"name": "registration_date", "type": "DATE", "description": "Дата регистрации"},
+        {"name": "loyalty_level", "type": "TEXT", "description": "Уровень лояльности"},
+        {"name": "city", "type": "TEXT", "description": "Город"},
+        {"name": "birth_date", "type": "DATE", "description": "Дата рождения"},
+        {"name": "gender", "type": "TEXT", "description": "Пол"}
+      ]
+    },
+    {
+      "name": "suppliers",
+      "description": "Информация о поставщиках",
+      "columns": [
+        {"name": "supplier_id", "type": "INTEGER", "description": "Уникальный идентификатор поставщика"},
+        {"name": "supplier_name", "type": "TEXT", "description": "Название поставщика"},
+        {"name": "contact_person", "type": "TEXT", "description": "Контактное лицо"},
+        {"name": "email", "type": "TEXT", "description": "Электронная почта"},
+        {"name": "phone", "type": "TEXT", "description": "Телефон"},
+        {"name": "country", "type": "TEXT", "description": "Страна"},
+        {"name": "rating", "type": "FLOAT", "description": "Рейтинг поставщика"}
+      ]
+    },
+    {
+      "name": "inventory",
+      "description": "Информация о запасах",
+      "columns": [
+        {"name": "inventory_id", "type": "INTEGER", "description": "Уникальный идентификатор записи инвентаря"},
+        {"name": "store_id", "type": "INTEGER", "description": "Идентификатор магазина"},
+        {"name": "product_id", "type": "INTEGER", "description": "Идентификатор товара"},
+        {"name": "quantity", "type": "FLOAT", "description": "Количество на складе"},
+        {"name": "last_update", "type": "TIMESTAMP", "description": "Время последнего обновления"},
+        {"name": "min_stock_level", "type": "FLOAT", "description": "Минимальный уровень запаса"},
+        {"name": "max_stock_level", "type": "FLOAT", "description": "Максимальный уровень запаса"}
+      ]
+    },
+    {
+      "name": "promotions",
+      "description": "Информация о промо-акциях",
+      "columns": [
+        {"name": "promo_id", "type": "INTEGER", "description": "Уникальный идентификатор акции"},
+        {"name": "promo_name", "type": "TEXT", "description": "Название акции"},
+        {"name": "start_date", "type": "DATE", "description": "Дата начала"},
+        {"name": "end_date", "type": "DATE", "description": "Дата окончания"},
+        {"name": "promo_type", "type": "TEXT", "description": "Тип акции (скидка, 2+1, и т.д.)"},
+        {"name": "discount_amount", "type": "FLOAT", "description": "Размер скидки"},
+        {"name": "min_purchase", "type": "FLOAT", "description": "Минимальная сумма покупки"}
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "from": {"table": "sales", "column": "store_id"},
+      "to": {"table": "stores", "column": "store_id"},
+      "type": "many-to-one"
+    },
+    {
+      "from": {"table": "sales", "column": "product_id"},
+      "to": {"table": "products", "column": "product_id"},
+      "type": "many-to-one"
+    },
+    {
+      "from": {"table": "sales", "column": "customer_id"},
+      "to": {"table": "customers", "column": "customer_id"},
+      "type": "many-to-one"
+    },
+    {
+      "from": {"table": "sales", "column": "promo_id"},
+      "to": {"table": "promotions", "column": "promo_id"},
+      "type": "many-to-one"
+    },
+    {
+      "from": {"table": "products", "column": "category_id"},
+      "to": {"table": "categories", "column": "category_id"},
+      "type": "many-to-one"
+    },
+    {
+      "from": {"table": "products", "column": "subcategory_id"},
+      "to": {"table": "subcategories", "column": "subcategory_id"},
+      "type": "many-to-one"
+    },
+    {
+      "from": {"table": "products", "column": "supplier_id"},
+      "to": {"table": "suppliers", "column": "supplier_id"},
+      "type": "many-to-one"
+    },
+    {
+      "from": {"table": "subcategories", "column": "category_id"},
+      "to": {"table": "categories", "column": "category_id"},
+      "type": "many-to-one"
+    },
+    {
+      "from": {"table": "inventory", "column": "store_id"},
+      "to": {"table": "stores", "column": "store_id"},
+      "type": "many-to-one"
+    },
+    {
+      "from": {"table": "inventory", "column": "product_id"},
+      "to": {"table": "products", "column": "product_id"},
+      "type": "many-to-one"
+    }
+  ]
+} 
