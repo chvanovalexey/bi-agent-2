@@ -37,10 +37,24 @@ def get_llm_processor():
 query_executor = get_query_executor()
 llm_processor = get_llm_processor()
 
+# Make sure the session state for query input exists
+if 'query_input' not in st.session_state:
+    st.session_state.query_input = ""
+
+# Add temporary storage for example queries
+if 'example_query' not in st.session_state:
+    st.session_state.example_query = ""
+    
+# If we have a pending example, put it in the query_input field
+if st.session_state.example_query:
+    st.session_state.query_input = st.session_state.example_query
+    st.session_state.example_query = ""  # Clear after use
+
 # User input
 user_query = st.text_area("Ваш запрос:", 
     placeholder="Например: Покажи топ-10 товаров по продажам за последний месяц", 
-    height=100)
+    height=100,
+    key="query_input")
 
 # Process button
 if st.button("📊 Выполнить запрос"):
@@ -100,8 +114,8 @@ with st.sidebar:
     
     for i, query in enumerate(example_queries):
         if st.button(f"Пример {i+1}", key=f"example_{i}"):
-            # Will update the text area with the example
-            st.session_state.query_input = query
+            # Store the example in a temporary variable
+            st.session_state.example_query = query
             # Need to rerun to update the text area
             st.rerun()
 
@@ -116,8 +130,4 @@ with st.sidebar:
         - OpenAI GPT-4o mini
         - DuckDB
         - Python
-    """)
-
-# Make sure the session state for query input exists
-if 'query_input' not in st.session_state:
-    st.session_state.query_input = "" 
+    """) 

@@ -51,6 +51,11 @@ class QueryExecutor:
             
             # Add a LIMIT clause if not present
             if not has_limit:
+                # Удаляем точку с запятой в конце запроса, если она есть
+                if query.strip().endswith(';'):
+                    query = query.strip()[:-1]
+                
+                # Добавляем LIMIT в конец запроса
                 query = f"{query} LIMIT {self.max_rows}"
             
             logger.info(f"Executing query: {query}")

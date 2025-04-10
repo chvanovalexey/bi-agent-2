@@ -70,6 +70,15 @@ class LLMProcessor:
             elif "```" in sql_query:
                 sql_query = sql_query.split("```")[1].split("```")[0].strip()
             
+            # Ensure the query has a LIMIT clause
+            if "LIMIT" not in sql_query.upper():
+                # Удаляем точку с запятой в конце запроса, если она есть
+                if sql_query.strip().endswith(';'):
+                    sql_query = sql_query.strip()[:-1]
+                
+                # Добавляем LIMIT в конец запроса
+                sql_query = f"{sql_query} LIMIT 1000"
+            
             logger.info(f"Generated SQL query: {sql_query}")
             return sql_query
             
